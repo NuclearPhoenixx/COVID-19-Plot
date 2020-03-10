@@ -3,7 +3,7 @@ import csv
 from git import Repo
 import matplotlib.pyplot as plt
 
-git_dir = ".COVID-19-DATA"
+git_dir = "COVID-19-DATA"
 path = "csse_covid_19_data/csse_covid_19_time_series/"
 filename = "time_series_19-covid-"
 
