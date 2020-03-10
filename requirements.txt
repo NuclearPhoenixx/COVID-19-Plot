@@ -1,2 +1,2 @@
-matplotlib
-gitpython
+matplotlib >= 3.2.0
+gitpython >= 3.1.0
