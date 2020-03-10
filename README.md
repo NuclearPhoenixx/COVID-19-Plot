@@ -26,3 +26,4 @@ Head to the ```#### USER INPUT ####``` section and edit the parameters to your w
 
 - Add nice user input arguments
 - Remove gitpython and add the data repo as submodule (!)
+- Refinements here and there
