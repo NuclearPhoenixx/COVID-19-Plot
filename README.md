@@ -21,3 +21,8 @@ Head to the ```#### USER INPUT ####``` section and edit the parameters to your w
   - Third line: Day-to-day delta of cases.
   - Fourth line: Ratio of delta(day n)/delta(day n-1)
 - You can also choose to plot the data.
+
+## To Do
+
+- Add nice user input arguments
+- Remove gitpython and add the data repo as submodule (!)
