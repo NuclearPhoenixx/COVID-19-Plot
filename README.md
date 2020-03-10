@@ -2,6 +2,7 @@
 
 This small script automatically downloads all the latest COVID-19 data from the [2019 Novel Coronavirus COVID-19 (2019-nCoV) Data Repository by Johns Hopkins CSSE](https://github.com/CSSEGISandData/COVID-19), lets you choose a country and/or province and plots the data for you. Additionally, you can also save a csv file with the chosen data and some more info (see below).
 
+![ExampleFigure](screenshots/figure.png)
 
 ## Install
 
