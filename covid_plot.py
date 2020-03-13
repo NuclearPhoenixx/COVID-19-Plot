@@ -13,7 +13,7 @@ country = 	"austria" # Choose an available country
 province = 	"" # Specify a province or blank to get the whole country
 file = 		False # true or false to save all data to a file
 plot =		True # true or false to plot the data
-plot_log =      True # wheter or not the y-axis should be logarithmic
+plot_log =      False # wheter or not the y-axis should be logarithmic
 #### ---------- ####
 
 
