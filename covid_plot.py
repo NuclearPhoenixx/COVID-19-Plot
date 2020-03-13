@@ -115,17 +115,20 @@ def print_file():
 # PLOT ALL THE COVID DATA
 def plot_data():
 	print("Preparing plot...")
+	
 	i = 4
 	plot_data = []
 	while i < len(data):
 		plot_data += [int(data[i])]
 		i += 1
-
+	
+	plt.figure("COVID-19 Plot")
 	plt.plot(plot_data)
 	if data[0] == "":
 		plt.title(f"{category} in {data[1]}")
 	else:
 		plt.title(f"{category} in {data[0]}, {data[1]}")
+	
 	plt.xlabel(f"days since {header[4]} [mm/dd/yy]")
 	plt.ylabel("number (cases)")
 	if plot_log:
