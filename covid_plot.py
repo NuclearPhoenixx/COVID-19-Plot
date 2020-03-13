@@ -9,10 +9,11 @@ filename = "time_series_19-covid-"
 
 #### USER INPUT ####
 category =	"Confirmed" # [Confirmed, Deaths, Recovered]
-country = 	"mainland china" # Choose an available country
+country = 	"austria" # Choose an available country
 province = 	"" # Specify a province or blank to get the whole country
-file = 		False #true or false to save all data to a file
-plot =		True #true or false to plot the data
+file = 		False # true or false to save all data to a file
+plot =		True # true or false to plot the data
+plot_log =      True # wheter or not the y-axis should be logarithmic
 #### ---------- ####
 
 
@@ -127,6 +128,8 @@ def plot_data():
 		plt.title(f"{category} in {data[0]}, {data[1]}")
 	plt.xlabel(f"days since {header[4]} [mm/dd/yy]")
 	plt.ylabel("number (cases)")
+	if plot_log:
+		plt.yscale('log')
 	plt.show()
 	print("Goodbye.")
 
