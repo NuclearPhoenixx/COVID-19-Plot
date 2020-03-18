@@ -6,9 +6,21 @@ This small script automatically downloads all the latest COVID-19 data from the 
 
 ## Install
 
-You need Python 3 for this to work.
+First of all, you need Python 3 for this to work.
 
-Download script, install all the dependencies via ```pip3 install -r requirements.txt``` and then simply run it with ```python3 covid_plot.py```.
+```bash
+#Clone git repository
+git clone https://github.com/Phoenix1747/COVID-19-Plot.git
+
+#Change directory
+cd COVID-19-Plot
+
+#Install dependencies
+pip3 install -r requirements.txt
+
+#Execute script
+python3 covid_plot.py
+```
 
 ## Config
 
@@ -26,5 +38,3 @@ Head to the ```#### USER INPUT ####``` section and edit the parameters to your w
 ## To Do
 
 - Add nice user input arguments
-- Remove gitpython and add the data repo as submodule (!)
-- Refinements here and there
