@@ -2,25 +2,29 @@
 import csv
 from git import Repo
 import matplotlib.pyplot as plt
+from argparse import ArgumentParser
 
 git_dir = "COVID-19"
 path = "csse_covid_19_data/csse_covid_19_time_series/"
 filename = "time_series_19-covid-"
 
-#### USER INPUT ####
-category =      "Confirmed" # [Confirmed, Deaths, Recovered]
-country =       "austria" # Choose an available country
-province =      "" # Specify a province or blank to get the whole country
-file =          False # true or false to save all data to a file
-plot =          True # true or false to plot the data
-plot_log =      False # wheter or not the y-axis should be logarithmic
-#### ---------- ####
-
-
 #global vars
 data = []
 header = []
 
+# PARSE USER INPUT
+def parse_user():
+        parser = ArgumentParser(description="Plot the latest COVID-19 data based on country and province/state.")
+
+        parser.add_argument("-np", "--no-plot", action='store_true', help="do not plot the data")
+        parser.add_argument("-l", "--log", action='store_true', help="plot logarithmic axis")
+        parser.add_argument("-f", "--file", help="print data to this file")
+        parser.add_argument("-c", "--country", required=True, help="specify country as in data")
+        parser.add_argument("-p", "--province", default="", help="specify province in the chosen country")
+        parser.add_argument("-cy", "--category", default="confirmed", help="specify a category [confirmed, deaths,recovered]")
+
+        return parser.parse_args()
+        
 # INIT ALL AROUND THE DATA REPO GIT AND ALL
 def init_repo():
         repo = Repo(".")
@@ -40,7 +44,7 @@ def init_repo():
                 print("Successfully initialized submodule.")
 
 # GET ALL THE DATA FROM GIT REPO
-def get_data():
+def get_data(category, country, province):
         global data
         global header
 
@@ -77,7 +81,7 @@ def get_data():
                 quit()
 
 # PRINT ALL (NEW) DATA TO CSV FILE
-def print_file():
+def print_file(filepath):
         print("Preparing file...")
         delta = [] #List with all the changes
         n = 0 #starts really at 3, the first four entries are region, country, lat/longitude; the fith one is just the start, no delta
@@ -99,10 +103,12 @@ def print_file():
                         growth += [exp]
                 n += 1
 
-        if data[0] == "":
-                save_file = data[1].replace(" ", "") + "_" + category + ".csv"
-        else:
-                save_file = data[1].replace(" ", "") + "(" + province + ")" + "_" + category + ".csv"
+        #if data[0] == "":
+        #        save_file = data[1].replace(" ", "") + "_" + category + ".csv"
+        #else:
+        #        save_file = data[1].replace(" ", "") + "(" + province + ")" + "_" + category + ".csv"
+
+        save_file = filepath
 
         with open(save_file, "w", newline="") as sfile:
                 writer = csv.writer(sfile)
@@ -113,7 +119,7 @@ def print_file():
         print(f"Successfully wrote data to {save_file}.")
 
 # PLOT ALL THE COVID DATA
-def plot_data():
+def plot_data(plot_log, category):
         print("Preparing plot...")
 
         i = 4
@@ -137,11 +143,14 @@ def plot_data():
         print("Goodbye.")
 
 def main():
+        args = parse_user()
+        #print(args.oof)
+        
         init_repo()
-        get_data()
-        if file:
-                print_file()
-        if plot:
-                plot_data()
+        get_data(args.category.capitalize(), args.country, args.province)
+        if args.file:
+                print_file(args.file)
+        if not args.no_plot:
+                plot_data(args.log, args.category.capitalize())
 
 main() #do stuff
