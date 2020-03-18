@@ -47,7 +47,7 @@ optional arguments:
 Notes:
 
 - You can choose from 3 categories: Confirmed cases [Confirmed], deaths [Deaths] and recoveries [Recovered].
-- Countries and provinces are taken directly from the data csv and in order to get the correct datapoint you have to know the exact country name as in the csv and at least part of the province name (not case sensitive). Example: Looking for `China` will result in an error, instead look for `Mainland China` (again, not case sensitive). Have a look at these files: [COVID-19 time series](https://github.com/CSSEGISandData/COVID-19/tree/master/csse_covid_19_data/csse_covid_19_time_series)
+- Countries and provinces are taken directly from the data csv and in order to get the correct datapoint you have to know the exact country name as in the csv and at least part of the province name (not case sensitive). This can be a bit tricky for a couple of countries. Example: Looking for `South Korea` will result in an error, instead look for `Korea, South` (again, not case sensitive). Have a look at these files: [COVID-19 time series](https://github.com/CSSEGISandData/COVID-19/tree/master/csse_covid_19_data/csse_covid_19_time_series)
 - You can choose to print the data results to a (csv) file like the original data file. Additionally you will also get the following info:
   - Third line: Day-to-day delta of cases.
   - Fourth line: Ratio of delta(day n)/delta(day n-1)
