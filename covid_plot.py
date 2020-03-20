@@ -24,7 +24,7 @@ def parse_user():
         parser.add_argument("-cy", "--category", default="confirmed", help="specify a category [confirmed, deaths,recovered]")
 
         return parser.parse_args()
-        
+
 # INIT ALL AROUND THE DATA REPO GIT AND ALL
 def init_repo():
         repo = Repo(".")
@@ -33,7 +33,7 @@ def init_repo():
                 submodule = Repo(git_dir)
                 current = submodule.head.commit
                 print("Looking for updates...")
-                repo.submodule_update() ##Update Submodules
+                submodule.remotes.origin.pull() ##Update Submodules
                 if current != submodule.head.commit:
                         print("Updated data submodule.")
                 else:
