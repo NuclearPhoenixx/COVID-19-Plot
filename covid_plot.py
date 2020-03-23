@@ -1,6 +1,6 @@
 #!/usr/bin/env python3
 import csv
-from git import Repo
+from git import Repo, exc
 import matplotlib.pyplot as plt
 from argparse import ArgumentParser
 
@@ -33,7 +33,16 @@ def init_repo():
                 submodule = Repo(git_dir)
                 current = submodule.head.commit
                 print("Looking for updates...")
-                submodule.remotes.origin.pull() ##Update Submodules
+
+                try:
+                        submodule.remotes.origin.pull() ##Update Submodules
+                except exc.GitCommandError as err:
+                        if "resolve" in err.stderr.lower():
+                                print("No internet connection, skipping check.")
+                                return
+                        else:
+                                print(err)
+                
                 if current != submodule.head.commit:
                         print("Updated data submodule.")
                 else:
