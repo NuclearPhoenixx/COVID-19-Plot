@@ -6,7 +6,8 @@ from argparse import ArgumentParser
 
 git_dir = "COVID-19"
 path = "csse_covid_19_data/csse_covid_19_time_series/"
-filename = "time_series_19-covid-"
+filename1 = "time_series_covid19_"
+filename2 = "_global.csv"
 
 #global vars
 data = {}
@@ -21,7 +22,7 @@ def parse_user():
         parser.add_argument("-f", "--file", help="print data to this file")
         parser.add_argument("-c", "--country", required=True, action="append", help="specify country as in data. If you provide multiple country flags this will go into comparison mode.")
         parser.add_argument("-p", "--province", default="", help="specify province in the chosen country")
-        parser.add_argument("-cy", "--category", default="confirmed", help="specify a category [confirmed, deaths,recovered]")
+        parser.add_argument("-cy", "--category", default="confirmed", help="specify a category [confirmed, deaths]")
 
         return parser.parse_args()
 
@@ -57,7 +58,7 @@ def get_data(category, country, province):
         global data
         global header
 
-        file = git_dir + "/" + path + filename + category + ".csv"
+        file = git_dir + "/" + path + filename1 + category + filename2
         print("Preparing data...")
         with open(file) as ofile:
                 csv_reader = csv.reader(ofile, delimiter=",")
@@ -185,7 +186,7 @@ def main():
                 return
         
         init_repo()
-        get_data(args.category.capitalize(), args.country, args.province)
+        get_data(args.category.lower(), args.country, args.province)
         if args.file:
                 print_file(args.file)
         if not args.no_plot:
