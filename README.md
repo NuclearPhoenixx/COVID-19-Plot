@@ -37,8 +37,8 @@ optional arguments:
   -l, --log             plot logarithmic axis
   -f FILE, --file FILE  print data to this file
   -c COUNTRY, --country COUNTRY
-                        specify country as in data. If you provide multiple country flags this will go into comparison
-                        mode.
+                        specify country as in data. If you provide multiple country flags this will
+                        go into comparison mode.
   -p PROVINCE, --province PROVINCE
                         specify province in the chosen country
   -cy CATEGORY, --category CATEGORY
