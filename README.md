@@ -37,17 +37,17 @@ optional arguments:
   -l, --log             plot logarithmic axis
   -f FILE, --file FILE  print data to this file
   -c COUNTRY, --country COUNTRY
-                        specify country as in data. If you provide multiple country flags this
-                        will go into comparison mode.
+                        specify country as in data. If you provide multiple country flags this will go into comparison
+                        mode.
   -p PROVINCE, --province PROVINCE
                         specify province in the chosen country
   -cy CATEGORY, --category CATEGORY
-                        specify a category [confirmed, deaths]
+                        specify a category [confirmed, deaths, recovered]
 ```
 
 Notes:
 
-- You can choose from two categories: Confirmed cases [Confirmed] and deaths [Deaths].
+- You can choose from two categories: Confirmed cases [Confirmed], deaths [Deaths] and recovered [Recovered].
 - Countries and provinces are taken directly from the data csv and in order to get the correct datapoint you have to know the exact country name as in the csv and at least part of the province name (not case sensitive). This can be a bit tricky for a couple of countries. Example: Looking for `South Korea` will result in an error, instead look for `Korea, South` (again, not case sensitive). Have a look at these files: [COVID-19 time series](https://github.com/CSSEGISandData/COVID-19/tree/master/csse_covid_19_data/csse_covid_19_time_series)
 - You can choose to print the data results to a (csv) file like the original data file. Additionally you will also get the following info:
   - Third line: Day-to-day delta of cases.

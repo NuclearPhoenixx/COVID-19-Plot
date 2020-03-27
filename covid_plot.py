@@ -22,7 +22,7 @@ def parse_user():
         parser.add_argument("-f", "--file", help="print data to this file")
         parser.add_argument("-c", "--country", required=True, action="append", help="specify country as in data. If you provide multiple country flags this will go into comparison mode.")
         parser.add_argument("-p", "--province", default="", help="specify province in the chosen country")
-        parser.add_argument("-cy", "--category", default="confirmed", help="specify a category [confirmed, deaths]")
+        parser.add_argument("-cy", "--category", default="confirmed", help="specify a category [confirmed, deaths, recovered]")
 
         return parser.parse_args()
 
