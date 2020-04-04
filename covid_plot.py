@@ -9,6 +9,8 @@ path = "csse_covid_19_data/csse_covid_19_time_series/"
 filename1 = "time_series_covid19_"
 filename2 = "_global.csv"
 
+modes = {"total":"number of cases","delta":"number of new cases","growth":"growth rate"}
+
 #global vars
 data = {}
 header = []
@@ -23,6 +25,7 @@ def parse_user():
         parser.add_argument("-c", "--country", required=True, action="append", help="specify country as in data. If you provide multiple country flags this will go into comparison mode.")
         parser.add_argument("-p", "--province", default="", help="specify province in the chosen country")
         parser.add_argument("-cy", "--category", default="confirmed", help="specify a category [confirmed, deaths, recovered]")
+        parser.add_argument("-m", "--mode", default="total", help="specify what to plot [total, delta, growth]")
 
         return parser.parse_args()
 
@@ -89,45 +92,56 @@ def get_data(category, country, province):
                                                 data[c.lower()] = data_buffer
 
                         line_count += 1
-
+        
         if len(data) > 0:
                 print("Done grabbing data.")
         else:
                 print("Country and/or province not available!")
                 quit()
 
-# PRINT ALL (NEW) DATA TO CSV FILE
-def print_file(filepath):
-        print("Preparing file...")
-
+# COMPUTE DAY TO DAY DELTA
+def get_delta():
         delta = {}
-        growth = {}
 
         for key in data:
                 delta[key] = [] #List with all the changes
                 n = 0 #starts really at 3, the first four entries are region, country, lat/longitude; the fith one is just the start, no delta
                 while n < len(data[key]):
-                        if n <= 4:
+                        if n < 4:
                                 delta[key] += [""]
+                        elif n == 4:
+                                delta[key] += [0]
                         else:
                                 dN = int(data[key][n]) - int(data[key][n-1])
                                 delta[key] += [dN]
                         n += 1
+        return delta
 
+# COMPUTE GROWTH RATE
+def get_growth():
+        delta = get_delta()
+        growth = {}
+
+        for key in data:
                 growth[key] = []
                 n = 0
                 while n < len(data[key]):
-                        if n <= 5 or delta[key][n-1] == 0:
+                        if n < 4:
                                 growth[key] += [""]
+                        elif delta[key][n-1] == 0 or delta[key][n-1] == "":
+                                growth[key] += [0]
                         else:
                                 exp = int(delta[key][n]) / int(delta[key][n-1])
                                 growth[key] += [exp]
                         n += 1
+        return growth
 
-        #if data[0] == "":
-        #        save_file = data[1].replace(" ", "") + "_" + category + ".csv"
-        #else:
-        #        save_file = data[1].replace(" ", "") + "(" + province + ")" + "_" + category + ".csv"
+# PRINT ALL (NEW) DATA TO CSV FILE
+def print_file(filepath):
+        print("Preparing file...")
+        
+        delta = get_delta()
+        growth = get_growth()
 
         save_file = filepath
 
@@ -141,10 +155,16 @@ def print_file(filepath):
         print(f"Successfully wrote data to {save_file}.")
 
 # PLOT ALL THE COVID DATA
-def plot_data(plot_log, category):
+def plot_data(plot_log, category, mode):
+        global data
+        
         print("Preparing plot...")
-
         plt.figure("COVID-19 Plot")
+
+        if mode == "delta":
+                data = get_delta()
+        elif mode == "growth":
+                data = get_growth()
 
         for key in data:
                 i = 4
@@ -171,7 +191,7 @@ def plot_data(plot_log, category):
 
         plt.legend()
         plt.xlabel(f"days since {header[4]} [mm/dd/yy]")
-        plt.ylabel("number (cases)")
+        plt.ylabel(modes[mode])
         if plot_log:
                 plt.yscale('log')
         plt.show()
@@ -184,12 +204,15 @@ def main():
         if len(args.country) > 1 and not args.province == "":
                 print("Comparing countries ONLY. Please delete province input.")
                 return
+        if not args.mode.lower() in modes:
+                print("Invalid plot mode.")
+                return
         
         init_repo()
         get_data(args.category.lower(), args.country, args.province)
         if args.file:
                 print_file(args.file)
         if not args.no_plot:
-                plot_data(args.log, args.category.capitalize())
+                plot_data(args.log, args.category.capitalize(), args.mode.lower())
 
 main() #do stuff
