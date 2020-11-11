@@ -22,6 +22,8 @@ pip3 install -r requirements.txt
 python3 covid_plot.py
 ```
 
+**When using this script for the first time, please give it some time as it will be downloading like 500MB of COVID data!**
+
 ## Config
 
 Use python3 to use this script as usual. More info:
